@@ -1,0 +1,1056 @@
+@extends('admin.layout.app')
+
+@section('page_title', 'Manage Room Types')
+
+@section('content')
+
+@php
+
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Carbon;
+
+$users = DB::table('users')->where('id', session()->get('user_id'))->get();
+
+@endphp
+
+<h3>Manage Room Types</h3>
+
+<section class="section">
+
+    <!--Disabled Backdrop Modal -->
+
+    <div class="modal fade text-left" id="backdrop" tabindex="-1" aria-labelledby="myModalLabel4" style="display: none;" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel4">Add Room Rates
+
+                    </h4>
+
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="POST" class="form form-vertical" action="{{ url('room_types') }}">
+
+                        @csrf
+
+                        <div class="form-body">
+
+                            <div class="row">
+
+                                <?php
+
+				                if($users[0]->role == 1) {    
+
+                                $branch = DB::table('branchs')->get();    
+
+                                ?>
+
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="brCode">Branch</label>
+
+                                        <select name="brCode" id="brCode" class="form-select elements" required>
+
+                                            <option value="" hidden disabled selected>Select</option>
+
+                                            @foreach($branch as $br)
+
+                                            <option value="{{ $br->brCode }}">{{ $br->brName }}</option>    
+
+                                            @endforeach
+
+                                            
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <?php }else{ ?>
+
+                                <input type="hidden" name="brCode" value="{{ session()->get('br_code') }}">    
+
+                                <?php } ?>    
+
+
+
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="roomType">Room Type</label>
+
+                                        <input type="text" id="roomType" class="form-control" name="roomType" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="triple">Triple</label>
+
+                                        <input type="number" id="triple" class="form-control" name="triple" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="double">Double</label>
+
+                                        <input type="number" id="double" class="form-control" name="double" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="single">Single</label>
+
+                                        <input type="number" id="single" class="form-control" name="single" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdTriple">Week Day Triple</label>
+
+                                        <input type="number" id="wdTriple" class="form-control" name="wdTriple" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdDouble">Week Day Double</label>
+
+                                        <input type="number" id="wdDouble" class="form-control" name="wdDouble" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdSingle">Week Day Single</label>
+
+                                        <input type="number" id="wdSingle" class="form-control" name="wdSingle" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mTriple">Monthly Triple</label>
+
+                                        <input type="number" class="form-control elements" name="mTriple" id="mTriple" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mDouble">Monthly Double</label>
+
+                                        <input type="number" id="mDouble" class="form-control elements" name="mDouble" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mSingle">Monthly Single</label>
+
+                                        <input type="number" id="mSingle" class="form-control elements" name="mSingle" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        {{-- <label for="vat">Vat %</label> --}}
+                                        <label for="vat">Booking Fee %</label>
+
+                                        <input type="number" id="vat" class="form-control" name="vat" required>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-12 d-flex justify-content-end py-3">
+
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Add Type</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="row py-3 px-4">
+
+            @php
+
+                if(session()->get('role_id') == 1) {
+
+                $available = DB::table('rooms')->where('roomStatus','=',5)->count();
+
+                $blocked = DB::table('rooms')->where('roomStatus','=',3)->count();
+
+                $reservation = DB::table('rooms')->where('roomStatus','=',6)->count();
+
+                $unclean = DB::table('rooms')->where('roomStatus','=',7)->count();
+
+                $occupied = DB::table('rooms')->where('roomStatus','=',8)->count();
+
+                $todayCheckout = DB::table('booking')->whereDate('checkout_date','<=',date('Y-m-d'))
+
+                                                        ->where('checkout_by', 'occupied')
+
+                                                        ->count();
+
+                }else{
+
+                
+
+                $available = DB::table('rooms')->where('roomStatus', 5)
+
+                                                ->where('brCode', session()->get('br_code')) 
+
+                                                ->count();
+
+                $blocked = DB::table('rooms')->where('roomStatus', 3)
+
+                                                ->where('brCode', session()->get('br_code')) 
+
+                                                ->count();
+
+                $reservation = DB::table('rooms')->where('roomStatus', 6)
+
+                                                ->where('brCode', session()->get('br_code')) 
+
+                                                ->count();
+
+                $unclean = DB::table('rooms')->where('roomStatus', 7)
+
+                                                ->where('brCode', session()->get('br_code')) 
+
+                                                ->count();        
+
+                $occupied = DB::table('rooms')->where('roomStatus', 8)
+
+                                                ->where('brCode', session()->get('br_code')) 
+
+                                                ->count();
+
+                $todayCheckout = DB::table('booking')->whereDate('checkout_date','<=',date('Y-m-d'))
+
+                                                ->where('brCode',session()->get('br_code'))
+
+                                                ->where('checkout_by', 'occupied')
+
+                                                ->count();
+
+            
+
+                }
+
+            @endphp
+
+            <div class="col-md-1 col-12"></div>
+
+            <div class="col-md-2 col-12">
+
+                <button type="button" class="btn btn-success">
+
+                    Available <span class="badge bg-transparent">{{$available}}</span>
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-12">
+
+                <button type="button" class="btn btn-dark">
+
+                    Blocked <span class="badge bg-transparent">{{$blocked}}</span>
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-12">
+
+                <button type="button" class="btn today-checkout">
+
+                    T. Checkout <span class="badge bg-transparent">{{$todayCheckout}}</span>
+
+                    {{-- Reservation <span class="badge bg-transparent">{{$reservation}}</span> --}}
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-12">
+
+                <button type="button" class="btn btn-primary">
+
+                    UnClean <span class="badge bg-transparent">{{$unclean}}</span>
+
+                </button>
+
+            </div>
+
+            <div class="col-md-2 col-12">
+
+                <button type="button" class="btn btn-danger">
+
+                    Occupied <span class="badge bg-transparent">{{$occupied}}</span>
+
+                </button>
+
+            </div>
+
+            <div class="col-md-1 col-12"></div>
+
+        </div>
+
+        <div class="card-header">
+
+            @php 
+
+            $access = DB::table('role_access')->where('levelType', session()->get('role_id'))->first();
+
+            @endphp
+
+            @if($access->canAdd == 1)
+
+            <a href="javascript:void(0);" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#backdrop">Add Room Rates</a>
+
+            @endif
+
+
+
+            @if(Session::get('success'))
+
+                        <div class="alert alert-success">
+
+                        <i class="bi bi-check-circle"></i> 
+
+                        {{ Session::get('success') }}
+
+                        </div>
+
+            @endif
+
+            @if(Session::get('fail'))
+
+                        <div class="alert alert-danger">
+
+                        {{ Session::get('fail') }}
+
+                        </div>
+
+            @endif
+
+
+
+            @error('roomType')
+
+                <div class="alert alert-warning">
+
+                {{ $message }}
+
+                </div>
+
+            @enderror
+
+                    
+
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-striped" id="table1">
+
+                <thead>
+
+                    <tr>
+
+                        <!-- <th>S.No</th> -->
+
+                        
+                        <th>Branch</th>
+
+                        <th class="text-center">Room Type ID#</th>
+
+                        <th>Room Type</th>
+
+                        <th>Triple</th>
+
+                        <th>Double</th>
+
+                        <th>Single</th>
+
+                        <th>W.D Triple</th>
+
+                        <th>W.D Double</th>
+
+                        <th>W.D Single</th>
+
+                        <th>M.Triple</th>
+
+                        <th>M.Double</th>
+
+                        <th>M.Single</th>
+
+                        <th>Fee %</th>
+
+                        <th width="180">Action</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="rtBody">
+
+                   @php
+
+                       $counter = 1;
+
+                   @endphp 
+
+                   @foreach($roomTypes as $list)
+
+                    <tr>
+
+                        @php
+
+                        $username = DB::table('users')->where('id', $list->created_by)->get();
+
+                        $brname = DB::table('branchs')->where('brCode', $list->brCode)->first();
+
+                        @endphp
+
+                        <!-- <td class="text-center">{{ $counter++ }}</td> -->
+
+                        
+                        <td>
+
+                            {{$brname->brName}}
+
+                        </td>
+
+                        <td class="text-center">{{ $list->id }}</td>
+
+                        <td>{{$list->roomType}}</td>
+
+                        <td>{{$list->rTriple}}</td>
+
+                        <td>{{$list->rDouble}}</td>
+
+                        <td>{{$list->rSingle}}</td>
+
+                        <td>{{$list->wdTriple}}</td>
+
+                        <td>{{$list->wdDouble}}</td>
+
+                        <td>{{$list->wdSingle}}</td>
+
+                        <td>{{$list->mTriple}}</td>
+
+                        <td>{{$list->mDouble}}</td>
+
+                        <td>{{$list->mSingle}}</td>
+
+                        <td>{{$list->vat}}</td>
+
+                        <td>
+
+                            {{-- <a href="" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#moreinfo">More</a> --}}
+
+                            <a href="javascript:void(0)" data-id="{{ $list->id }}" class="btn btn-info btn-sm more" >More</a>
+
+
+
+                             <!--Disabled Backdrop Modal for more info -->
+
+                             <div class="modal fade text-left" id="moreinfo-{{ $list->id }}" tabindex="-1" aria-labelledby="myModalLabel4" style="display: none;" aria-hidden="true" data-bs-backdrop="false">
+
+                                <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title" id="myModalLabel4">More Information
+
+                                            </h4>
+
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+
+                                                <i class="bi bi-x-circle"></i>
+
+                                            </button>
+
+                                        </div>
+
+                                        <div class="modal-body room-type">
+
+                                            <div class="row">
+
+                                                <div class="col-md-6 col-12">
+
+                                                    <p style="font-weight: 600;">Branch Name: {{ $brname->brName }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-3 col-12">
+
+                                                    <p style="font-weight: 600;">Room Type: {{ $list->roomType }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-3 col-12">
+
+                                                    <p style="font-weight: 600;">Booking Fee(%): {{ $list->vat }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Tariff(Triple)</label>
+
+                                                    <p>{{ $list->rTriple }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Tariff(Double)</label>
+
+                                                    <p>{{ $list->rDouble }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Tariff(Single)</label>
+
+                                                    <p>{{ $list->rSingle }}</p>
+
+                                                </div>
+
+
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">WeekDay Tariff(Triple)</label>
+
+                                                    <p>{{ $list->wdTriple }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">WeekDay Tariff(Double)</label>
+
+                                                    <p>{{ $list->wdDouble }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">WeekDay Tariff(Single)</label>
+
+                                                    <p>{{ $list->wdSingle }}</p>
+
+                                                </div>
+
+
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Monthly Tariff(Triple)</label>
+
+                                                    <p>{{ $list->mTriple }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Monthly Tariff(Double)</label>
+
+                                                    <p>{{ $list->mDouble }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-4 col-12">
+
+                                                    <label for="">Monthly Tariff(Single)</label>
+
+                                                    <p>{{ $list->mSingle }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+
+                                                    <label for="">Created By</label>
+
+                                                    <p>{{ ucfirst($username[0]->name) }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+
+                                                    <label for="">Updated By</label>
+
+                                                    <p>{{ ucfirst($username[0]->name) }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+
+                                                    <label for="">Created at</label>
+
+                                                    <p>{{ $list->created_date }}</p>
+
+                                                </div>
+
+                                                <div class="col-md-6 col-12">
+
+                                                    <label for="">Updated at</label>
+
+                                                    <p>{{ $list->updated_date }}</p>
+
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                          
+
+                                        </div>
+
+                                        <div class="modal-footer">
+
+                                            
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!--Disabled Backdrop Modal for more info -->
+
+                            @if($access->canEdit == 1)
+
+                            <a href="{{url('room_types/'.$list->id.'/edit')}}" class="btn btn-secondary btn-sm btn-edit" data-bs-toggle="modal" data-bs-backdrop="false" data-bs-target="#update">Edit</a>
+
+                            @endif
+
+
+
+                            @if($access->canDelete == 1)
+
+                            <a href="javascript:void(0);" class="btn btn-danger btn-sm typeDelete">
+
+                            {{-- <a href="javascript:void(0);" class="btn btn-danger btn-sm typeDelete" onclick="$(this).find('form').submit();"> --}}
+
+                                <form method="POST" action="{{url('room_types/'.$list->id)}}">
+
+                                    @csrf
+
+                                    {{-- @method('DELETE')    --}}
+
+                                    <input type="hidden" name="_method" value="DELETE">
+
+                                </form>      
+
+                            Delete
+
+                            </a>
+
+                            @endif
+
+                        </td>
+
+                    </tr>
+
+
+
+                    <!--Disabled Backdrop Modal update-->
+
+    <div class="modal fade text-left" id="update" tabindex="-1" aria-labelledby="myModalLabel4" style="display: none;" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel4">Update Room Type
+
+                    </h4>
+
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <form method="POST" class="form form-vertical" action="{{ url('room_types/id') }}">
+
+                        @csrf
+
+                        @method('PUT')
+
+                        <div class="form-body">
+
+                            <div class="row">
+
+                                
+
+                                <?php
+
+				                if($users[0]->role == 1) {    
+
+                                $branch = DB::table('branchs')->get();    
+
+                                ?>
+
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="brCode">Branch</label>
+
+                                        <select name="brCode" id="brCode" class="form-select elements" required>
+
+                                            <option value="" hidden disabled selected>Select</option>
+
+                                            @foreach($branch as $br)
+
+                                            <option value="{{ $br->brCode }}">{{ $br->brName }}</option>    
+
+                                            @endforeach
+
+                                            
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                                <?php }else{ ?>
+
+                                <input type="hidden" name="brCode" value="{{ session()->get('br_code') }}">    
+
+                                <?php } ?>
+
+                                
+
+                                <div class="col-md-6 col-12">
+
+                                    <div class="form-group">
+
+                                        <input type="hidden" name="id" class="form-control elements">
+
+                                        <label for="roomType">Room Type</label>
+
+                                        <input type="text" class="form-control elements" name="roomType" required>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="rTriple">Triple</label>
+
+                                        <input type="number" class="form-control elements" name="rTriple" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="rDouble">Double</label>
+
+                                        <input type="number" class="form-control elements" name="rDouble" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="rSingle">Single</label>
+
+                                        <input type="number" class="form-control elements" name="rSingle" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdTriple">Week Day Triple</label>
+
+                                        <input type="number" class="form-control elements" name="wdTriple" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdDouble">Week Day Double</label>
+
+                                        <input type="number" id="wdDouble" class="form-control elements" name="wdDouble" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="wdSingle">Week Day Single</label>
+
+                                        <input type="number" id="wdSingle" class="form-control elements" name="wdSingle" required>
+
+                                    </div>
+
+                                </div>
+
+                                
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mTriple">Monthly Triple</label>
+
+                                        <input type="number" class="form-control elements" name="mTriple" id="mTriple" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mDouble">Monthly Double</label>
+
+                                        <input type="number" id="mDouble" class="form-control elements" name="mDouble" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        <label for="mSingle">Monthly Single</label>
+
+                                        <input type="number" id="mSingle" class="form-control elements" name="mSingle" step="0.01" required>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-md-4 col-12">
+
+                                    <div class="form-group">
+
+                                        {{-- <label for="updateVat">Vat %</label> --}}
+                                        <label for="updateVat">Booking Fee %</label>
+
+                                        <input type="number" id="updateVat" class="form-control elements" name="vat" required>
+
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="col-12 d-flex justify-content-end py-3">
+
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">Update Type</button>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+                    @endforeach
+
+                    {{-- <tr>
+
+                        <td>Nathaniel</td>
+
+                        <td>mi.Duis@diam.edu</td>
+
+                        <td>(012165) 76278</td>
+
+                        <td>Grumo Appula</td>
+
+                        <td>
+
+                            <span class="badge bg-danger">Inactive</span>
+
+                        </td>
+
+                    </tr> --}}
+
+                    
+
+                </tbody>
+
+            </table>
+
+            <div class="row">
+                <div class="col-12" style="display:flex;justify-content:center;">
+                    {{ $roomTypes->links('pagination::bootstrap-4') }}
+                </div>
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+    
+
+    
+
+
+
+</section>
+
+
+
+@endsection
+
+
+
