@@ -1,0 +1,404 @@
+    
+
+.profile-pic {
+
+    width: 100%;
+
+    max-width: 150px;
+
+    height: 150px;
+
+    border-radius: 150px;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+#myTabContent {
+
+    padding: 30px 0px;
+
+}
+
+
+
+.profileTab {
+
+    width: 100%;
+
+    max-width: 50%;
+
+}
+
+.form-text {
+
+    color: red;
+
+    font-size: 16px;
+
+}
+
+#photo {
+
+    display: none;
+
+}
+
+.btn-change {
+
+    background-color: green;
+
+    padding: 10px 8px;
+
+    color: white;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    margin-left: 10px;
+
+    margin-bottom: 5px;
+
+}
+
+.btn-photo {
+
+    margin-left: 10px;
+
+    padding: 10px 32px;
+
+}
+
+.Available {
+
+    background-color: #157347 !important;
+
+    color: white;
+
+    text-align: center;
+
+}
+
+.Blocked {
+
+
+
+    background-color: #212529 !important;
+
+    color: white;
+
+    text-align: center;
+
+}
+
+.Reservation {
+
+
+
+    background-color: #FFCA2C !important;
+
+    color: rgb(250, 250, 250);
+
+    text-align: center;
+
+}
+
+.UnClean {
+
+    background-color: #3950A2 !important;
+
+    color: rgb(253, 253, 253);
+
+    text-align: center;
+
+}
+
+.Occupied {
+
+
+
+    background-color: #d33242 !important;
+
+    color: rgb(253, 253, 253);
+
+    text-align: center;
+
+    position: relative;
+
+}
+
+.customtooltip {
+    position: absolute;
+    background-color: black;
+    color: white;
+    left: 0;
+    top: 40px;
+    width: 300px;
+    padding: 20px;
+    border-radius: 4px;
+    text-align: left;
+    display: none;
+    font-size: 13px;
+    z-index: 9999999999999;
+}
+.customtooltip p {
+    line-height: 10px;
+}
+
+.Occupied:hover .customtooltip {
+
+    display: inline-block;
+
+    
+
+}
+
+.overdue {
+
+    display: inline-block;
+
+    width: 10px;
+
+    height: 10px;
+
+    border-radius: 50px;
+
+    background-color: #ffffff !important;
+
+    animation: blink 0.5s linear infinite;
+
+}
+
+.partialAmt {
+
+    border: 4px solid;
+    animation: borderBlink 0.5s step-end infinite alternate;
+}
+@keyframes borderBlink { 50% { border-color: #f79a20; } }
+
+@keyframes blink{
+
+    0%{opacity: 0;}
+
+    50%{opacity: .5;}
+
+    100%{opacity: 1;}
+
+    }
+
+
+
+.today-checkout {
+
+    background-color: #c514bc !important;
+
+    color: rgb(255, 255, 255);
+
+    text-align: center;
+
+
+
+}
+
+.today-checkout:hover {
+
+    color: rgb(255, 255, 255) !important;
+
+}
+
+.bi-table {
+
+    font-size: 14px !important;
+
+}
+
+.day {
+
+    color: #db0f0f;
+
+    font-size: 16px;
+
+}
+
+.payment_done {
+
+    text-transform: capitalize;
+
+}
+
+#payment_done {
+
+    text-transform: capitalize;
+
+}
+
+.validate {
+
+    color: red;
+
+    font-size: 15px;
+
+}
+
+.form-switch .form-check-input {
+
+    width: 6em !important;
+
+    height: 2em !important;
+
+}
+
+.ck-content {
+
+    height: 200px !important;
+
+}
+
+#fromdate,#todate {
+
+            background-image: url('../images/calendar.gif');
+
+            background-repeat: no-repeat;
+
+            background-position: right;
+
+            cursor: pointer;
+
+            
+
+            
+
+}
+
+
+
+#roleTable thead th {
+
+    text-align: center;
+
+}
+
+#roleTable tbody td {
+
+    text-align: center;
+
+}
+
+.allbooking label {
+
+    background-color: antiquewhite;
+
+    padding: 4px;
+
+    width: 100%;
+
+    display: block;
+
+}
+
+.branch label {
+
+    background-color: antiquewhite;
+
+    padding: 4px;
+
+    width: 100%;
+
+    display: block;
+
+}
+
+.room-type label {
+
+    background-color: antiquewhite;
+
+    padding: 4px;
+
+    width: 100%;
+
+    display: block;
+
+}
+
+
+
+.floorModal label {
+
+    background-color: antiquewhite;
+
+    padding: 4px;
+
+    width: 100%;
+
+    display: block;
+
+}
+
+.rooms label {
+
+    background-color: antiquewhite;
+
+    padding: 4px;
+
+    width: 100%;
+
+    display: block;
+
+}
+
+
+.calendar {
+    margin-top: 30px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.created_by,.updated_by {
+
+    text-transform: capitalize;
+
+}
+.apexcharts-legend.position-right {
+    margin-right: 35px !important;
+}
+
+.opDel {
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-top: -32px;
+    margin-right: 10px;
+}
+.btn-delete i {
+    color: red;
+    cursor: pointer;
+}
+.btn-udelete i {
+    color: red;
+    cursor: pointer;
+}
+.note {
+    font-size: 10px;
+    color: red;
+}
+#brcode {
+    text-transform: uppercase;
+}
+@media print {
+
+    
+
+    body {
+
+            
+
+        background-color: transparent !important;
+
+    }
+
+}
